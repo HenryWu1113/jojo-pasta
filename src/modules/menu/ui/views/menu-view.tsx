@@ -18,7 +18,8 @@ export const MenuView = () => {
       rating: 4.8,
       category: "義大利麵",
       cookTime: "15分鐘",
-      image: "/placeholder.svg?height=400&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -28,7 +29,8 @@ export const MenuView = () => {
       rating: 4.9,
       category: "義大利麵",
       cookTime: "12分鐘",
-      image: "/placeholder.svg?height=500&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: true,
     },
     {
@@ -38,7 +40,8 @@ export const MenuView = () => {
       rating: 4.7,
       category: "義大利麵",
       cookTime: "10分鐘",
-      image: "/placeholder.svg?height=350&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -48,7 +51,8 @@ export const MenuView = () => {
       rating: 4.6,
       category: "義大利麵",
       cookTime: "18分鐘",
-      image: "/placeholder.svg?height=380&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -58,7 +62,8 @@ export const MenuView = () => {
       rating: 4.9,
       category: "義大利麵",
       cookTime: "20分鐘",
-      image: "/placeholder.svg?height=450&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: true,
     },
     {
@@ -68,7 +73,8 @@ export const MenuView = () => {
       rating: 5.0,
       category: "義大利麵",
       cookTime: "25分鐘",
-      image: "/placeholder.svg?height=420&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: true,
     },
     {
@@ -78,7 +84,8 @@ export const MenuView = () => {
       rating: 4.7,
       category: "義大利麵",
       cookTime: "16分鐘",
-      image: "/placeholder.svg?height=380&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -88,7 +95,8 @@ export const MenuView = () => {
       rating: 4.8,
       category: "義大利麵",
       cookTime: "18分鐘",
-      image: "/placeholder.svg?height=400&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
 
@@ -100,7 +108,8 @@ export const MenuView = () => {
       rating: 4.5,
       category: "炸物",
       cookTime: "8分鐘",
-      image: "/placeholder.svg?height=300&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -110,7 +119,8 @@ export const MenuView = () => {
       rating: 4.6,
       category: "炸物",
       cookTime: "6分鐘",
-      image: "/placeholder.svg?height=280&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -120,7 +130,8 @@ export const MenuView = () => {
       rating: 4.7,
       category: "炸物",
       cookTime: "12分鐘",
-      image: "/placeholder.svg?height=320&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -130,7 +141,8 @@ export const MenuView = () => {
       rating: 4.4,
       category: "炸物",
       cookTime: "7分鐘",
-      image: "/placeholder.svg?height=290&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -140,7 +152,8 @@ export const MenuView = () => {
       rating: 4.6,
       category: "炸物",
       cookTime: "10分鐘",
-      image: "/placeholder.svg?height=310&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
 
@@ -152,7 +165,8 @@ export const MenuView = () => {
       rating: 4.8,
       category: "飲料",
       cookTime: "3分鐘",
-      image: "/placeholder.svg?height=350&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -162,7 +176,8 @@ export const MenuView = () => {
       rating: 4.7,
       category: "飲料",
       cookTime: "5分鐘",
-      image: "/placeholder.svg?height=380&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -172,7 +187,8 @@ export const MenuView = () => {
       rating: 4.6,
       category: "飲料",
       cookTime: "4分鐘",
-      image: "/placeholder.svg?height=360&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -182,7 +198,8 @@ export const MenuView = () => {
       rating: 4.5,
       category: "飲料",
       cookTime: "5分鐘",
-      image: "/placeholder.svg?height=340&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -192,7 +209,8 @@ export const MenuView = () => {
       rating: 4.7,
       category: "飲料",
       cookTime: "6分鐘",
-      image: "/placeholder.svg?height=370&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -202,7 +220,8 @@ export const MenuView = () => {
       rating: 4.4,
       category: "飲料",
       cookTime: "4分鐘",
-      image: "/placeholder.svg?height=330&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -212,7 +231,8 @@ export const MenuView = () => {
       rating: 4.2,
       category: "飲料",
       cookTime: "1分鐘",
-      image: "/placeholder.svg?height=320&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
 
@@ -224,7 +244,8 @@ export const MenuView = () => {
       rating: 4.9,
       category: "點心",
       cookTime: "即享",
-      image: "/placeholder.svg?height=350&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: true,
     },
     {
@@ -234,7 +255,8 @@ export const MenuView = () => {
       rating: 4.6,
       category: "點心",
       cookTime: "即享",
-      image: "/placeholder.svg?height=330&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -244,7 +266,8 @@ export const MenuView = () => {
       rating: 4.7,
       category: "點心",
       cookTime: "即享",
-      image: "/placeholder.svg?height=340&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -254,7 +277,8 @@ export const MenuView = () => {
       rating: 4.8,
       category: "點心",
       cookTime: "8分鐘",
-      image: "/placeholder.svg?height=360&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -264,7 +288,8 @@ export const MenuView = () => {
       rating: 4.5,
       category: "點心",
       cookTime: "即享",
-      image: "/placeholder.svg?height=310&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -274,7 +299,8 @@ export const MenuView = () => {
       rating: 4.3,
       category: "點心",
       cookTime: "即享",
-      image: "/placeholder.svg?height=300&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
 
@@ -286,7 +312,8 @@ export const MenuView = () => {
       rating: 4.5,
       category: "沙拉",
       cookTime: "5分鐘",
-      image: "/placeholder.svg?height=320&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -296,7 +323,8 @@ export const MenuView = () => {
       rating: 4.7,
       category: "沙拉",
       cookTime: "3分鐘",
-      image: "/placeholder.svg?height=340&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
     {
@@ -306,7 +334,8 @@ export const MenuView = () => {
       rating: 4.4,
       category: "沙拉",
       cookTime: "5分鐘",
-      image: "/placeholder.svg?height=310&width=300",
+      image:
+        "https://res.cloudinary.com/dxnin6pf6/image/upload/v1714232821/tehmuqpaviskp4oqbwnh.jpg",
       featured: false,
     },
   ];
