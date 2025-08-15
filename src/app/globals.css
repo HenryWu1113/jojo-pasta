@@ -119,4 +119,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* 確保 dropdown 不會影響 scrollbar */
+  [data-radix-popper-content-wrapper] {
+    z-index: 9999 !important;
+  }
+  
+  /* 防止 modal/dropdown 導致 scrollbar 消失 */
+  html {
+    overflow-y: scroll;
+  }
 }
