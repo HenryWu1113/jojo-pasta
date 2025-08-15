@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, integer } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -8,6 +8,10 @@ export const user = pgTable("user", {
     .$defaultFn(() => false)
     .notNull(),
   image: text("image"),
+  // LINE 登入相關欄位
+  lineUserId: text("line_user_id").unique(),
+  isVirtualEmail: boolean("is_virtual_email").$defaultFn(() => false),
+  realEmail: text("real_email"),
   createdAt: timestamp("created_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
@@ -58,4 +62,40 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at").$defaultFn(
     () => /* @__PURE__ */ new Date()
   ),
+});
+
+// 訂單資料表
+export const orders = pgTable("orders", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  orderNumber: text("order_number").notNull().unique(),
+  userId: text("user_id").references(() => user.id, { onDelete: "set null" }), // 可選，支援訪客訂單
+  customerName: text("customer_name").notNull(),
+  customerPhone: text("customer_phone").notNull(),
+  customerEmail: text("customer_email"),
+  pickupTime: timestamp("pickup_time").notNull(),
+  totalAmount: text("total_amount").notNull(), // 使用 text 儲存 decimal
+  specialNotes: text("special_notes"),
+  status: text("status").$default(() => "pending").notNull(),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()).notNull(),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
+});
+
+// 訂單項目資料表
+export const orderItems = pgTable("order_items", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  orderId: text("order_id").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  itemName: text("item_name").notNull(),
+  itemPrice: text("item_price").notNull(),
+  quantity: integer("quantity").notNull(),
+  subtotal: text("subtotal").notNull(),
+});
+
+// 聯絡表單資料表
+export const contactMessages = pgTable("contact_messages", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  subject: text("subject"),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()).notNull(),
 });

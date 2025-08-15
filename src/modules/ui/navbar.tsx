@@ -5,10 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
+import { UserProfile } from "@/modules/auth/ui/components/user-profile";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CartDrawer } from "@/modules/cart";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { user, isLoading, isAuthenticated, logout } = useAuth();
 
   // 確保關閉手機選單當路由改變時
   useEffect(() => {
@@ -45,8 +50,8 @@ export const Navbar = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+          <div className="hidden md:flex items-center">
+            <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" asChild>
                 <Link
                   href="/"
@@ -79,6 +84,7 @@ export const Navbar = () => {
                   聯絡我們
                 </Link>
               </Button>
+              
               <Button
                 variant="default"
                 size="sm"
@@ -88,10 +94,44 @@ export const Navbar = () => {
                 <Link href="/takeaway">外帶自取</Link>
               </Button>
             </div>
+            
+            {/* 購物車和身份驗證區域 - 移到最右側 */}
+            <div className="ml-6 flex items-center gap-3">
+              {/* 購物車 */}
+              <CartDrawer />
+              
+              {/* 身份驗證 */}
+              {isLoading ? (
+                <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse" />
+              ) : isAuthenticated && user ? (
+                <UserProfile user={user} onLogout={logout} />
+              ) : (
+                <Button variant="ghost" size="sm" asChild>
+                  <Link
+                    href="/auth/login"
+                    className="text-muted-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    登入
+                  </Link>
+                </Button>
+              )}
+            </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* Mobile menu and auth */}
+          <div className="md:hidden flex items-center gap-3">
+            {/* 行動版身份驗證 */}
+            {isLoading ? (
+              <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
+            ) : isAuthenticated && user ? (
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user.image} alt={user.name} />
+                <AvatarFallback className="bg-orange-500 text-white text-sm font-medium">
+                  {user.name.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            ) : null}
+            
             <Button
               variant="ghost"
               size="sm"
@@ -152,6 +192,41 @@ export const Navbar = () => {
                   聯絡我們
                 </Link>
               </Button>
+              
+              {/* 行動版身份驗證 */}
+              {isLoading ? (
+                <div className="w-full h-10 bg-gray-200 animate-pulse rounded-md" />
+              ) : isAuthenticated && user ? (
+                <div className="border-t pt-4 mt-4">
+                  <div className="flex items-center gap-3 px-3 py-2">
+                    <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-medium">
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">{user.name}</p>
+                      <p className="text-xs text-muted-foreground">{user.email}</p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={logout}
+                    className="w-full mt-2 text-muted-foreground hover:text-primary"
+                  >
+                    登出
+                  </Button>
+                </div>
+              ) : (
+                <Button variant="ghost" size="sm" asChild>
+                  <Link
+                    href="/auth/login"
+                    className="text-muted-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    登入
+                  </Link>
+                </Button>
+              )}
+              
               <Button
                 variant="default"
                 size="sm"
