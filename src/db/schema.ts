@@ -12,6 +12,8 @@ export const user = pgTable("user", {
   lineUserId: text("line_user_id").unique(),
   isVirtualEmail: boolean("is_virtual_email").$defaultFn(() => false),
   realEmail: text("real_email"),
+  // 管理員權限
+  isAdmin: boolean("is_admin").$defaultFn(() => false),
   createdAt: timestamp("created_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
@@ -80,11 +82,53 @@ export const orders = pgTable("orders", {
   updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
 });
 
+// 餐點分類資料表
+export const menuCategories = pgTable("menu_categories", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull().unique(), // 英文名稱，用於程式邏輯
+  displayName: text("display_name").notNull(), // 顯示名稱（中文）
+  description: text("description"),
+  sortOrder: integer("sort_order").$default(() => 0),
+  active: boolean("active").$default(() => true),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()).notNull(),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
+});
+
+// 餐點資料表
+export const menuItems = pgTable("menu_items", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  
+  // 基本資訊
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  price: text("price").notNull(), // 使用 text 儲存 decimal
+  category: text("category").notNull(), // 使用分類名稱而非 ID，更靈活
+  
+  // 詳細資訊
+  cookTime: text("cook_time"), // 如 "15分鐘"
+  rating: text("rating").$default(() => "0"), // 使用 text 儲存 decimal
+  featured: boolean("featured").$default(() => false),
+  available: boolean("available").$default(() => true),
+  
+  // 媒體和標籤
+  image: text("image"), // 主要圖片 URL
+  images: text("images"), // JSON 陣列格式儲存多張圖片
+  allergens: text("allergens"), // JSON 陣列格式儲存過敏原
+  tags: text("tags"), // JSON 陣列格式儲存標籤
+  
+  // 管理資訊
+  sortOrder: integer("sort_order").$default(() => 0),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()).notNull(),
+  updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),
+  createdBy: text("created_by").references(() => user.id, { onDelete: "set null" }),
+});
+
 // 訂單項目資料表
 export const orderItems = pgTable("order_items", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   orderId: text("order_id").notNull().references(() => orders.id, { onDelete: "cascade" }),
-  itemName: text("item_name").notNull(),
+  menuItemId: text("menu_item_id").references(() => menuItems.id, { onDelete: "set null" }), // 關聯到菜單項目
+  itemName: text("item_name").notNull(), // 冗余儲存，防止菜單項目被刪除後訂單資料遺失
   itemPrice: text("item_price").notNull(),
   quantity: integer("quantity").notNull(),
   subtotal: text("subtotal").notNull(),

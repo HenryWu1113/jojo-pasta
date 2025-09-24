@@ -1,5 +1,5 @@
-import { db, orders, orderItems, contactMessages, user } from "@/db";
-import { eq, and, desc } from "drizzle-orm";
+import { db, orders, orderItems, contactMessages, user, menuItems, menuCategories } from "@/db";
+import { eq, and, desc, asc } from "drizzle-orm";
 
 // 訂單相關操作
 export async function createOrder(orderData: {
@@ -149,4 +149,190 @@ export function generateVirtualEmail(lineUserId: string): string {
 
 export function isVirtualEmail(email: string): boolean {
   return email.endsWith('@jojo-pasta.virtual');
+}
+
+// 餐點管理相關操作
+export async function getAllMenuItems() {
+  try {
+    return await db
+      .select({
+        id: menuItems.id,
+        name: menuItems.name,
+        description: menuItems.description,
+        price: menuItems.price,
+        categoryId: menuItems.categoryId,
+        categoryName: menuCategories.displayName,
+        cookTime: menuItems.cookTime,
+        rating: menuItems.rating,
+        featured: menuItems.featured,
+        available: menuItems.available,
+        image: menuItems.image,
+        images: menuItems.images,
+        allergens: menuItems.allergens,
+        tags: menuItems.tags,
+        sortOrder: menuItems.sortOrder,
+        createdAt: menuItems.createdAt,
+        updatedAt: menuItems.updatedAt,
+      })
+      .from(menuItems)
+      .leftJoin(menuCategories, eq(menuItems.categoryId, menuCategories.id))
+      .orderBy(asc(menuItems.sortOrder), asc(menuItems.name));
+  } catch (error) {
+    console.error('取得菜單項目失敗:', error);
+    throw new Error('取得菜單項目失敗');
+  }
+}
+
+export async function getMenuItemById(id: string) {
+  try {
+    const [item] = await db
+      .select()
+      .from(menuItems)
+      .where(eq(menuItems.id, id));
+    
+    return item || null;
+  } catch (error) {
+    console.error('取得菜單項目失敗:', error);
+    throw new Error('取得菜單項目失敗');
+  }
+}
+
+export async function createMenuItem(itemData: {
+  name: string;
+  description: string;
+  price: string;
+  categoryId: string;
+  cookTime?: string;
+  rating?: string;
+  featured?: boolean;
+  available?: boolean;
+  image?: string;
+  images?: string[];
+  allergens?: string[];
+  tags?: string[];
+  sortOrder?: number;
+  createdBy?: string;
+}) {
+  try {
+    const [newItem] = await db.insert(menuItems).values({
+      ...itemData,
+      images: itemData.images ? JSON.stringify(itemData.images) : null,
+      allergens: itemData.allergens ? JSON.stringify(itemData.allergens) : null,
+      tags: itemData.tags ? JSON.stringify(itemData.tags) : null,
+    }).returning();
+    
+    return newItem;
+  } catch (error) {
+    console.error('建立菜單項目失敗:', error);
+    throw new Error('建立菜單項目失敗');
+  }
+}
+
+export async function updateMenuItem(id: string, itemData: Partial<{
+  name: string;
+  description: string;
+  price: string;
+  categoryId: string;
+  cookTime: string;
+  rating: string;
+  featured: boolean;
+  available: boolean;
+  image: string;
+  images: string[];
+  allergens: string[];
+  tags: string[];
+  sortOrder: number;
+}>) {
+  try {
+    const updateData = {
+      ...itemData,
+      images: itemData.images ? JSON.stringify(itemData.images) : undefined,
+      allergens: itemData.allergens ? JSON.stringify(itemData.allergens) : undefined,
+      tags: itemData.tags ? JSON.stringify(itemData.tags) : undefined,
+      updatedAt: new Date(),
+    };
+
+    // 移除 undefined 值
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key as keyof typeof updateData] === undefined) {
+        delete updateData[key as keyof typeof updateData];
+      }
+    });
+
+    const [updatedItem] = await db
+      .update(menuItems)
+      .set(updateData)
+      .where(eq(menuItems.id, id))
+      .returning();
+    
+    return updatedItem;
+  } catch (error) {
+    console.error('更新菜單項目失敗:', error);
+    throw new Error('更新菜單項目失敗');
+  }
+}
+
+export async function deleteMenuItem(id: string) {
+  try {
+    await db.delete(menuItems).where(eq(menuItems.id, id));
+    return true;
+  } catch (error) {
+    console.error('刪除菜單項目失敗:', error);
+    throw new Error('刪除菜單項目失敗');
+  }
+}
+
+// 餐點分類相關操作
+export async function getAllMenuCategories() {
+  try {
+    return await db
+      .select()
+      .from(menuCategories)
+      .where(eq(menuCategories.active, true))
+      .orderBy(asc(menuCategories.sortOrder), asc(menuCategories.displayName));
+  } catch (error) {
+    console.error('取得菜單分類失敗:', error);
+    throw new Error('取得菜單分類失敗');
+  }
+}
+
+export async function createMenuCategory(categoryData: {
+  name: string;
+  displayName: string;
+  description?: string;
+  sortOrder?: number;
+}) {
+  try {
+    const [newCategory] = await db.insert(menuCategories).values(categoryData).returning();
+    return newCategory;
+  } catch (error) {
+    console.error('建立菜單分類失敗:', error);
+    throw new Error('建立菜單分類失敗');
+  }
+}
+
+// 初始化預設分類
+export async function initializeDefaultCategories() {
+  try {
+    const existingCategories = await getAllMenuCategories();
+    
+    if (existingCategories.length === 0) {
+      const defaultCategories = [
+        { name: 'pasta', displayName: '義大利麵', sortOrder: 1 },
+        { name: 'fried', displayName: '炸物', sortOrder: 2 },
+        { name: 'drinks', displayName: '飲料', sortOrder: 3 },
+        { name: 'desserts', displayName: '點心', sortOrder: 4 },
+        { name: 'salads', displayName: '沙拉', sortOrder: 5 },
+      ];
+
+      for (const category of defaultCategories) {
+        await createMenuCategory(category);
+      }
+      
+      console.log('預設分類建立完成');
+    }
+  } catch (error) {
+    console.error('初始化預設分類失敗:', error);
+    throw new Error('初始化預設分類失敗');
+  }
 }
